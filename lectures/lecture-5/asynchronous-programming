@@ -1,0 +1,81 @@
+Intro
+The Problem: The Limitations of a Synchronous Approach
+Doing Laundry and Cooking at Home - The Synchronous Way:
+Imagine you need to cook dinner and do laundry. If you were to handle this in a synchronous manner, you would complete each task one at a time. You'd start the laundry and wait until the washing and drying cycles are fully complete before you even start cooking.
+
+Issues:
+Inefficiency: You spend a considerable amount of time just waiting for the laundry to finish. This is time that could have been better utilized.
+Poor Time Management: Dinner is delayed because you can't start cooking until the laundry is complete.
+Chef in a Restaurant - The Synchronous Way:
+In a restaurant kitchen, suppose a chef decided to prepare dishes in a strictly sequential, synchronous manner. He would take one order, cook it from start to finish, and only then move on to the next.
+
+Issues:
+Long Wait Times: Customers would have to wait a considerable amount of time between each order.
+Inefficiency: The chef is not making optimal use of his time or kitchen resources.
+Introducing a Better Way: Asynchronous Task Management
+Having identified the problems associated with a synchronous approach, let's explore how an asynchronous method can provide solutions.
+
+Doing Laundry and Cooking at Home - The Asynchronous Way:
+Instead of waiting for the laundry to finish, you start the washing machine and immediately begin cooking. As the food simmers, you can even fold the clothes that just came out of the dryer. You are essentially multitasking without waiting for one task to finish before starting another.
+
+Advantages:
+Efficiency: You are making better use of your time.
+Optimized Time Management: Both laundry and cooking are completed more or less within the same timeframe, optimizing the use of your time.
+Chef in a Restaurant - The Asynchronous Way:
+The chef starts by simmering the broth for a soup. While it's simmering, he begins to prepare a stir-fry. He can stir the soup while waiting for the pan to heat up for the stir-fry, thereby making optimal use of his time and resources.
+
+Advantages:
+Faster Service: Multiple dishes are being prepared simultaneously, reducing customer wait time.
+Resource Optimization: The chef optimizes the use of kitchen resources, including his own time.
+Conclusion: Why Asynchronous is Better
+In both scenarios, the asynchronous approach solves the problems presented by the synchronous method:
+
+Efficiency: Asynchronous task management allows for better use of time and resources.
+Better Time Management: Multiple tasks can be managed concurrently, thereby offering a better experience, be it for someone at home or a customer in a restaurant.
+
+Example
+The Problem Setup
+In a traditional synchronous model, imagine that the chef can cook only one dish at a time from start to finish. While one dish is being cooked, nothing else can be done. To simulate this, let's assume we have text files that represent different dishes:
+
+kebab.txt - Contains text: "I am Kebab, I am being cooked."
+pilav.txt - Contains text: "I am Pilav, I am being cooked."
+In a synchronous system, reading these text files one after another would look like:
+
+const fs = require('fs');
+
+// Reading Kebab
+const kebab = fs.readFileSync('kebab.txt', 'utf8');
+console.log(kebab); // Output: "I am Kebab, I am being cooked."
+
+// Reading Pilav
+const pilav = fs.readFileSync('pilav.txt', 'utf8');
+console.log(pilav); // Output: "I am Pilav, I am being cooked."
+
+console.log("Chef is preparing some Asian food.");
+Here, the chef has to complete cooking each dish (reading each file) before moving to another task, such as preparing some Asian food. As you can imagine, this is not the most efficient way to operate a kitchen or a computer system.
+
+The Asynchronous Solution
+In the asynchronous model, the chef starts cooking multiple dishes and can also do other tasks, such as preparing Asian food, while the dishes are being cooked. To simulate this, we can use fs.readFile() to read the text files asynchronously.
+
+const fs = require('fs');
+
+// Reading Kebab
+fs.readFile('kebab.txt', 'utf8', (err, data) => {
+if (err) throw err;
+console.log(data); // Output will come later: "I am Kebab, I am being cooked."
+});
+
+// Reading Pilav
+fs.readFile('pilav.txt', 'utf8', (err, data) => {
+if (err) throw err;
+console.log(data); // Output will come later: "I am Pilav, I am being cooked."
+});
+
+// Simulating another task (like preparing Asian food)
+console.log("Chef is preparing some Asian food.");
+In this asynchronous setup, you'll likely see "Chef is preparing some Asian food" printed before the contents of the files are printed. This illustrates that the chef didn't wait to finish the Kebab and Pilav to start preparing the Asian food, optimizing the workflow significantly.
+
+Key Teaching Points
+Multitasking: Like a chef in the kitchen, a computer can handle multiple tasks at once, making it more efficient.
+Non-blocking: Asynchronous programming allows other tasks to be performed without waiting for the previous tasks to complete, just like a chef doesn't wait for one dish to finish cooking before starting another.
+Order of Operations: The asynchronous model doesn't guarantee a specific order in which tasks will finish, akin to how a chef cannot precisely predict which dish will finish cooking first.
