@@ -1,0 +1,44 @@
+# Status Codes
+# Intro
+# HTTP status codes serve as critical feedback mechanisms in the interaction between a client (typically a user's browser) and a web server. They can quickly inform developers and sometimes users about the state of a given request, whether it has succeeded, failed, or requires further actions. Below is a detailed exploration of these status codes, categorized by their series, along with real-world examples to elucidate their relevance.
+
+# 1xx: Informational Status Codes
+# 100 Continue
+# What it Means: This is a provisional response, indicating that the server has received the request headers, and the client should proceed to send the request body.
+# Real-World Example: When uploading a large file, a server might first check if the file type and metadata are correct before asking the client to continue with the actual file upload.
+# 2xx: Success Status Codes
+# 200 OK
+# What it Means: This is the all-clear signal. The server successfully processed the request.
+# Real-World Example: When you successfully log into your social media account, the server returns a "200 OK" status, confirming that your login credentials are correct.
+# 201 Created
+# What it Means: The server successfully created a new resource as a result of the request.
+# Real-World Example: When you register for an online course, after filling out all the required fields and clicking "Submit," a "201 Created" status code indicates that your new account has been successfully created.
+# 3xx: Redirection Status Codes
+# 301 Moved Permanently
+# What it Means: The URL of the requested resource has permanently changed.
+# Real-World Example: If an online retailer rebrands and changes its website URL, a "301 Moved Permanently" ensures that users who visit the old URL are automatically redirected to the new one.
+# 302 Found
+# What it Means: The URL of the requested resource has changed temporarily.
+# Real-World Example: During a flash sale, a retailer might temporarily redirect users from the standard "Products" page to a "Flash Sale" page, using a "302 Found" status code.
+# 4xx: Client Error Status Codes
+# 400 Bad Request
+# What it Means: The server could not understand the request due to invalid syntax.
+# Real-World Example: If you manually alter the URL of a banking website in a way that is syntactically incorrect, the server might return a "400 Bad Request."
+# 401 Unauthorized
+# What it Means: The request lacks valid authentication credentials.
+# Real-World Example: If you try to access your medical records online without logging in, you may receive a "401 Unauthorized" status code.
+# 403 Forbidden
+# What it Means: The server understands the request, but refuses to authorize it.
+# Real-World Example: If you are a regular user trying to access an admin-only page on a website, you might receive a "403 Forbidden" status code.
+# 404 Not Found
+# What it Means: The server can't find the requested resource.
+# Real-World Example: If you click on a broken link to a product that no longer exists on an e-commerce site, you will likely encounter a "404 Not Found" status code.
+# 5xx: Server Error Status Codes
+# 500 Internal Server Error
+# What it Means: The server encountered an error and could not complete the request.
+# Real-World Example: When you're shopping online, if the server fails while trying to update the shopping cart due to some internal error, a "500 Internal Server Error" may be displayed.
+# 502 Bad Gateway
+# What it Means: One server received an invalid response from another server it was communicating with to fulfill the request.
+# Real-World Example: Imagine a news aggregator website that pulls articles from multiple sources. If one of those sources returns an invalid response, a "502 Bad Gateway" could be displayed.
+# Conclusion
+# HTTP status codes provide invaluable insights into the nature and result of client-server interactions. Understanding what each status code means can assist not only developers in debugging but also users in comprehending the state of their actions on the web. Whether the action is successful, encounters an error, or necessitates additional steps, each status code acts as a quick diagnostic tool conveying crucial information.
