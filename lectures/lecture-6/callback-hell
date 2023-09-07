@@ -1,0 +1,70 @@
+//  Callback Hell
+// Managing Asynchrony Through Callbacks
+// In JavaScript, one way to handle this asynchronicity is through the use of callbacks. A callback is a function passed as an argument to another function, which will be executed after the completion of that function.
+
+// Here is a simple example to read a CSV file, parse the data into an object, write the object into a JSON file, and then print a message to the console.
+
+const fs = require("fs");
+
+// Simulated parsing function
+const parseData = (csvData) => {
+    const lines = csvData.split("\n");
+    const header = lines[0].split(",");
+    const rows = lines.slice(1);
+    const parsed = rows.map((row) => {
+        const values = row.split(",");
+        const obj = {};
+        header.forEach((h, i) => {
+            obj[h] = values[i];
+        });
+        return obj;
+    });
+    return parsed;
+};
+
+// Read the CSV file
+fs.readFile("students.csv", "utf8", (errRead, csvData) => {
+    if (errRead) throw errRead;
+
+    // Parse the CSV data
+    const parsedData = parseData(csvData);
+
+    // Write the parsed data to a JSON file
+    fs.writeFile(
+        "students.json",
+        JSON.stringify(parsedData, null, 2),
+        (errWrite) => {
+            if (errWrite) throw errWrite;
+
+            // Print the parsed data
+            console.log("Successfully written to students.json");
+            console.log("Parsed Data:", parsedData);
+        }
+    );
+});
+// Expected Output JSON File: students.json
+[
+    {
+        Name: "Alice",
+        GraduationDate: "2022-05-15",
+        JobOfferDate: "2022-06-01",
+        JobTitle: "Software Engineer"
+    },
+    {
+        Name: "Bob",
+        GraduationDate: "2022-05-20",
+        JobOfferDate: "2022-06-05",
+        JobTitle: "Data Analyst"
+    }
+];
+// Introduction to Callback Hell
+// Even in this simple example, we can see the beginnings of what is known as "Callback Hell," where each nested callback increases the complexity and indentation of the code.
+
+// Problems with Callback Hell
+// As explained earlier, Callback Hell makes the code hard to read, maintain, and debug. Moreover, each callback needs its own error handling, which clutters the code further.
+
+// Can We Return Something from Callbacks in Asynchronous Operations?
+// In asynchronous programming with callbacks, functions don't return values in the way that synchronous functions do. Instead, the results are handled by passing them into the next callback function as arguments. That is why, in our example, we didn't see any return statements. The fs.readFile and fs.writeFile functions don't return any values; they pass the read data or potential errors into their respective callback functions for further action.
+
+// Conclusion
+// The current code structure, involving nested callbacks, serves as a cautionary tale. While it seems manageable in small doses, as your application grows and the nesting deepens, your code may become unmanageable. Understanding this limitation is essential as we transition into more sophisticated methods for handling asynchronicity, like Promises and async/await, which will be the topic of our next lecture.
