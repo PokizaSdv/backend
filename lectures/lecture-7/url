@@ -1,0 +1,58 @@
+Unified Resource Locator(URL)
+Intro
+A URL provides a way to uniquely identify any resource on the internet, be it an HTML page, image file, or any other type of document.
+
+Example:
+Let's consider the URL https://www.example.com:8080/path/to/resource?name=value#section
+
+https: Protocol that the browser must use. In this case, HTTPS implies that a secure connection should be established.
+www.example.com: The domain name identifies which server on the Internet the browser should connect to.
+8080: The port number on that server to which the connection needs to be made.
+/path/to/resource: This specifies a resource on the server, often mapping to a file or a collection of files on the server.
+?name=value: Query parameters start here. They are key-value pairs separated by &.
+#section: This is called a fragment identifier and is typically used to identify a subsection of the resource.
+Practical Utility:
+If you have an online store, each product can have its own URL, for instance:
+
+https://www.onlinestore.com/products/12345?color=red
+
+Here, the product with ID 12345 is accessed, and the query parameter color=red could be used to indicate that the user is interested in a red variant of the product.
+
+Localhost
+Localhost is often used for testing and development purposes. When you run a server on your computer, you can access it via the browser using http://localhost.
+
+Example:
+If you're running a development server on a port 3000, you would access it via http://localhost:3000
+
+Practical Utility:
+Developers often run their code on a local server before deploying it to a live website. Localhost enables them to test features and debug issues in a controlled environment.
+
+Port
+Ports allow different services to run on the same machine without interfering with each other.
+
+Example:
+Your local machine could be running a web server on port 3000 (http://localhost:3000) and a database server on port 5432.
+
+Practical Utility:
+Imagine you're developing a web application that requires both a web server and a database. By running these services on different ports, you can operate them concurrently without conflict.
+
+Query Parameters
+Query parameters are used to send additional information to the server.
+
+Example:
+https://www.example.com/search?query=laptops&sort=price
+
+Here, query=laptops could be used to search for laptops, and sort=price could be used to sort the results based on price.
+
+Practical Utility:
+If you're implementing a search feature in your web application, users can search for specific items and sort or filter results using query parameters.
+
+URL Variables (Path Parameters)
+These are placeholders that capture values in the URL, allowing you to create dynamic routes.
+
+Example:
+https://www.example.com/users/:userId/orders/:orderId
+
+Here, :userId and :orderId are path parameters. So, https://www.example.com/users/42/orders/7 would refer to the order with ID 7 for the user with ID 42.
+
+In summary, these elements together provide a powerful set of tools to specify what resource is being requested, where that resource is located, and what should be done with it.
