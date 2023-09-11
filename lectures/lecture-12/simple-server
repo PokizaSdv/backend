@@ -1,0 +1,79 @@
+Simple Server
+Running the project
+Download
+Firstly, download the resources attached to this lecture, which should include all the project files you'll need. Typically, these files might be compressed into a .zip format, so you'll need to extract them to a folder of your choice.
+
+Install Nodemon
+For a more efficient development process, we recommend installing Nodemon. Nodemon is a utility that monitors for any changes in your source code and automatically restarts your server, saving you from having to manually stop and start the server every time you make a change.
+
+You can install Nodemon globally on your machine, which means you can use it across all your Node.js projects. To install Nodemon globally, open your terminal and run:
+
+npm install -g nodemon
+Running the Project640
+Once you've set up your environment and navigated to the project folder in your terminal, you can start the server by running:
+
+nodemon index.js
+Intro
+When you want to visit a website, your browser sends a 'request' to the respective web server. It's akin to you asking the librarian for a specific book. The server then 'handles' this request, meaning it figures out what you're asking for and then finds that content within its stored resources.
+
+Once the server identifies the requested content, it must then deliver it to you, which in the digital world, means sending the data to your web browser. This process is similar to the librarian handing you the book you asked for, except that a web server can serve multiple 'patrons' simultaneously.
+
+Necessary Modules
+Before you can build a server, you need the right tools for the job. In Node.js, these tools are often provided by modules.
+
+const http = require("http");
+const fs = require("fs");
+Here, we import two essential modules:
+
+http: Enables us to create an HTTP server.
+fs: Allows us to read and write files, essential for serving HTML and CSS.
+Web Server Configuration
+Configuring the server involves specifying the hostname and port number.
+
+const host = "localhost";const port = 3000;
+host: The hostname "localhost" implies that the server will run on the same machine as the client (usually for testing).
+port: The port number 3000 is where the server listens for incoming requests.
+Creating the HTTP Server
+Now let's create an instance of an HTTP server.
+
+const server = http.createServer((request, response) => {
+// We will fill this part in the next step.
+});
+The http.createServer() function takes a callback function as an argument, which gets executed whenever a client sends a request to your server.
+
+Handling HTTP Requests
+Our HTML file references a CSS stylesheet, and when a browser renders that HTML, it will request the CSS file. So, our server must handle both HTML and CSS requests.
+
+Serving HTML:
+else if (request.url === "/") {
+fs.readFile("index.html", "utf-8", (err, data) => {
+if (err) {
+response.writeHead(500, { "Content-Type": "text/plain" });
+response.end("Something went wrong from our side");
+}
+response.setHeader("Content-Type", "text/html");
+response.end(data);
+});
+}
+When user makes a GET request to localhost:3000 This block reads the index.html file and sends its content as an HTTP response. Copy and paste into browser.
+
+Serving CSS:
+if (request.url === "/styles.css") {
+fs.readFile("styles.css", "utf-8", (err, css) => {
+if (err) {
+response.writeHead(500, { "Content-Type": "text/plain" });
+response.end("Something went wrong from our side");
+}
+response.setHeader("Content-Type", "text/css");
+response.end(css);
+});
+}
+We listen for requests directed at /styles.css. Upon such a request, we read the stylesheet file and return its contents.
+
+Listening for Incoming Connections
+Finally, we'll have our server listen on the specified port and host.
+
+server.listen(port, host, () => {
+console.log(`I am listening to ${host}, ${port}`);
+});
+When listen() is called, the server starts to listen on the port 3000, essentially saying, "I'm ready to handle HTTP requests at this port."
