@@ -1,0 +1,58 @@
+HTTP Verbs: GET, POST, PATCH, PUT, DELETE
+Why Do We Need HTTP Verbs?
+HTTP verbs are essential for defining the type of action that you wish to perform on a resource present on the server. Think of them as verbs in human language; just as "read," "write," and "delete" indicate actions on a book, HTTP verbs like GET, POST, PUT, and DELETE specify the type of operation you intend to carry out on server resources.
+
+Preliminary Data on Server
+Imagine the server holds a JSON file named todos.json, containing the following Todos:
+
+[
+{
+"id": 1,
+"title": "Buy groceries",
+"completed": false
+},
+{
+"id": 2,
+"title": "Write code",
+"completed": true
+}
+]
+GET
+Function: The GET method retrieves information from the server.
+Scenario 1: If you want to display all the Todos on your website, you could send a GET request to a specific URL, say https://example.com/api/todos.
+Pseudo-code:
+
+HTTP GET https://example.com/api/todos
+Scenario 2: You may also want to filter out only the completed Todos. This is another example where GET comes in handy, using query strings.
+Pseudo-code:
+
+HTTP GET https://example.com/api/todos?completed=true
+POST
+Function: The POST method is used to submit new data to the server.
+Scenario: To add a new Todo item titled "Go jogging", you could send a POST request with the data.
+Pseudo-code:
+
+HTTP POST https://example.com/api/todos
+Data: { "title": "Go jogging", "completed": false }
+PUT
+Function: The PUT method updates a resource entirely.
+Scenario: Let's say you want to edit the Todo with ID 1 to change its title and mark it as completed.
+Pseudo-code:
+
+HTTP PUT https://example.com/api/todos/1
+Data: { "title": "Buy vegetables", "completed": true }
+PATCH
+Function: The PATCH method is used for partially updating a resource on the server.
+Scenario: If you only want to mark the Todo with ID 2 as completed without changing its title, you can use PATCH.
+Pseudo-code:
+
+HTTP PATCH https://example.com/api/todos/2
+Data: { "completed": true }
+DELETE
+Function: The DELETE method removes a resource on the server.
+Scenario: If you wish to remove the Todo with ID 2, you would use DELETE.
+Pseudo-code:
+
+HTTP DELETE https://example.com/api/todos/2
+Each HTTP verb serves a specific purpose and gives clear semantics for what should happen on the server. The server, upon receiving these requests, performs the corresponding action on the resource, which in our example is the todos.json file. These actions can involve reading, creating, updating, or deleting data.
+Understanding HTTP verbs is essential for successfully building and interacting with web APIs, providing you with the power to perform a variety of operations.
