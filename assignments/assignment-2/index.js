@@ -4,7 +4,7 @@ const { data } = require("./data");
 console.log(data);
 
 const host = "localhost";
-const port = 3000;
+const port = 4000;
 
 const handleErrors = (res, message = "Something went wrong from our side") => {
     res.writeHead(500, { "Content-Type": "text/plain" });
