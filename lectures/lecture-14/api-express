@@ -1,0 +1,69 @@
+// ES2015 Modules
+// Intro
+// In modern JavaScript, we have evolved from the older module.exports and require() syntax to a cleaner and more readable format known as import and export. Let's first focus on exporting functionalities, which allows us to make parts of our code available for use in other files.
+
+// Enabling ES6 Modules in Node.js
+// To utilize ES6 modules in a Node.js project, it is requisite to specify "type": "module" within your package.json file. This declaration informs Node.js to interpret .js files as ES6 modules. Here is a snippet to illustrate what the package.json could look like:
+
+// {
+//   "name": "my-app",
+//   "version": "1.0.0",
+//   "type": "module",
+//   "main": "index.js",
+//   "scripts": {
+//     "start": "node index.js"
+//   }
+// }
+// Named Exports
+// Imagine we have a function called sayHello that we want to export. Our function simply logs "Hello, World!" to the console.
+
+// In greetings.js:
+
+// export const sayHello = () => {
+//   console.log("Hello, World!");
+// };
+// Here, the export keyword before const makes sayHello available to other files.
+
+// Now, let's say we have another function called sayGoodbye:
+
+// export const sayGoodbye = () => {
+//   console.log("Goodbye, World!");
+// };
+// Both sayHello and sayGoodbye can be exported from the same file, greetings.js.
+
+// To import these functions in another file, let's say in app.js, we can do the following:
+
+// import { sayHello, sayGoodbye } from './greetings.js';
+
+// sayHello(); // Output will be "Hello, World!"
+// sayGoodbye(); // Output will be "Goodbye, World!"
+// Renaming While Importing
+// While importing, you can rename the function to something else if you wish:
+
+// import { sayHello as greet, sayGoodbye as farewell } from './greetings.js';
+
+// greet(); // Output will be "Hello, World!"
+// farewell(); // Output will be "Goodbye, World!"
+// Here, sayHello is renamed to greet and sayGoodbye is renamed to farewell.
+
+// Default Exports
+// In contrast to named exports, each module can have only one default export. The default export can be imported under any name you choose.
+
+// Let's say we have a default function called defaultGreeting in greetings.js:
+
+// const defaultGreeting = () => {
+//   console.log("Default Greeting: Hello, everyone!");
+// };
+
+// export default defaultGreeting;
+// To import a default export, you don't need curly braces:
+
+// import greet from './greetings.js';
+
+// greet(); // Output will be "Default Greeting: Hello, everyone!"
+// You can also rename default exports as you wish:
+
+// import anyNameYouPrefer from './greetings.js';
+
+// anyNameYouPrefer(); // Output will be "Default Greeting: Hello, everyone!"
+// In summary, named exports are useful for exporting multiple elements, and they have to be imported using the same name unless renamed. Default exports, on the other hand, allow more flexibility in naming when importing but can only be used once per module. Both these techniques provide us with the ability to share and reuse code effectively across multiple files.
