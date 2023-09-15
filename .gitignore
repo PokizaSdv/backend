@@ -1,4 +1,4 @@
-assignments/**/node_modules
-assessments/**/node_modules
-lectures/**/node_modules
+assignments/**/node_modules/
+assessments/**/node_modules/
+lectures/**/node_modules/
 .DS_Store
