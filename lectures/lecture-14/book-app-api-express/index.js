@@ -1,5 +1,5 @@
-import { express } from "express";
-import { books } from "./data.js";
+import express from "express";
+import { books } from "./book-app-api-express/data.js";
 import { validate, v4 as uuid } from "uuid";
 // const express = require("express");
 const app = express();
@@ -66,7 +66,7 @@ app.get("/books/:bookId/reviews", (req, res) => {
     if (!validate(bookId) || !books[bookId]) {
         return res.status(400).json({ message: "Not a valid book ID" });
     }
-    res.status(200).json({ data: books[bookId].reviews });
+    res.status(200).json({ reviews: books[bookId].reviews });
 });
 
 // Create a new review for a book
