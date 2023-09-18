@@ -1,0 +1,26 @@
+{
+    "name": "job-application-api",
+    "version": "1.0.0",
+    "description": "job-application-api",
+    "main": "server.js",
+    "scripts": {
+        "test": "node server.js",
+        "start:dev": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PokizaSdv/backend.git#assessment-1"
+    },
+    "keywords": [
+        "api"
+    ],
+    "author": "pokiza",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/PokizaSdv/backend/issues"
+    },
+    "homepage": "https://github.com/PokizaSdv/backend/tree/assessment-1#readme",
+    "dependencies": {
+        "uuid": "^9.0.1"
+    }
+}
