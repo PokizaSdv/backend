@@ -1,0 +1,22 @@
+{
+    "name": "lecture-13",
+    "version": "1.0.0",
+    "description": "todo-app-api",
+    "main": "index.js",
+    "scripts": {
+        "start:dev": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PokizaSdv/backend.git#todo-app-api"
+    },
+    "author": "pokiza",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/PokizaSdv/backend/issues"
+    },
+    "homepage": "https://github.com/PokizaSdv/backend/tree/todo-app-api#readme",
+    "dependencies": {
+        "uuid": "^9.0.1"
+    }
+}
