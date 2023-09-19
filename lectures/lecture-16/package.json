@@ -1,0 +1,23 @@
+{
+  "name": "lecture-16",
+  "version": "1.0.0",
+  "description": "Book-app-api-express-controllers-routers",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PokizaSdv/backend.git#lecture-16"
+  },
+  "author": "me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PokizaSdv/backend/issues"
+  },
+  "homepage": "https://github.com/PokizaSdv/backend/tree/lecture-16#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  }
+}
