@@ -65,14 +65,14 @@ const stories = {
     }
 };
 
+// Get All Stories
 const getAllStories = (res) => {
-    // Code to return all stories
     res.writeHead(200, { "content-type": "application/json" });
     res.end(JSON.stringify(stories));
 };
 
+// Create A New Story
 const createStory = (req, res) => {
-    // Code to create a new story
     let body = [];
     req.on("data", (chunk) => {
         body.push(chunk);
@@ -93,141 +93,114 @@ const createStory = (req, res) => {
     });
 };
 
+// Get Single Story by Id
 const getStory = (req, res) => {
-    // Code to get a single story
-    const id = parseId(req.url, 2);
-    const story = stories[id];
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
 
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(story));
 };
 
+// Update Story Status by Id
 const updateStoryStatus = (req, res) => {
-    // Code to update a story's status
     let body = [];
     req.on("data", (chunk) => {
         body.push(chunk);
     });
     req.on("end", () => {
         body = JSON.parse(Buffer.concat(body));
-        const id = parseId(req.url, 2);
+        const storyId = parseId(req.url, 2);
 
-        stories[id].status = body.status;
+        stories[storyId].status = body.status;
 
         res.statusCode = 204;
         res.end();
     });
 };
 
+// Delete Story by Id
 const deleteStory = (req, res) => {
-    // Code to delete a story
-    const id = parseId(req.url, 2);
-    delete stories[id];
+    const storyId = parseId(req.url, 2);
+    delete stories[storyId];
     res.statusCode = 200;
     res.end();
 };
 
+// Get All Tasks by Story Id
 const getAllSubtasks = (res) => {
-    const allSubTasks = {};
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
 
-    for (const storyId in stories) {
-        const story = stories[storyId];
-
-        const tasksObj = story.tasks;
-
-        for (const taskId in tasksObj) {
-            const task = tasksObj[taskId];
-
-            allSubTasks[newId] = task;
-        }
-    }
     res.writeHead(200, { "content-type": "application/json" });
-    res.end(JSON.stringify(allSubTasks));
+    res.end(JSON.stringify(story.tasks));
 };
 
+// Create A new Task by Story Id
 const createSubtask = (req, res) => {
-    // Code to create a new subtask
-    const allSubTasks = {};
-    for (const storyId in stories) {
-        const story = stories[storyId];
-
-        const tasksObj = story.tasks;
-        let body = [];
-        req.on("data", (chunk) => {
-            body.push(chunk);
-        });
-        req.on("end", () => {
-            body = JSON.parse(Buffer.concat(body));
-            const newTask = {
-                id: newId,
-                name: body.name,
-                description: body.description,
-                status: body.status
-            };
-            allSubTasks[newId] = newTask;
-        });
-        res.writeHead(201, { "content-type": "application/json" });
-        res.end(JSON.stringify(newTask));
-    }
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
+    let body = [];
+    req.on("data", (chunk) => {
+        body.push(chunk);
+    });
+    req.on("end", () => {
+        body = JSON.parse(Buffer.concat(body));
+        const newTask = {
+            id: newId,
+            name: body.name,
+            description: body.description,
+            status: body.status
+        };
+        story[newTask] = newTask;
+    });
+    res.writeHead(201, { "content-type": "application/json" });
+    res.end(JSON.stringify(newTask));
 };
 
+// Update task Status by Story Id's, task Id
 const updateSubtaskStatus = (req, res) => {
-    // Code to update a subtask's status
-    for (const storyId in stories) {
-        const story = stories[storyId];
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
+    const taskId = parseId(req.url, 4);
+    const task = story[taskId];
+    let body = [];
+    req.on("data", (chunk) => {
+        body.push(chunk);
+    });
+    req.on("end", () => {
+        body = JSON.parse(Buffer.concat(body));
+        task.status = body.status;
 
-        const tasksObj = story.tasks;
-
-        for (const taskId in tasksObj) {
-            const task = tasksObj[taskId];
-            let body = [];
-            req.on("data", (chunk) => {
-                body.push(chunk);
-            });
-            req.on("end", () => {
-                body = JSON.parse(Buffer.concat(body));
-                task.status = body.status;
-
-                res.statusCode = 204;
-                res.end();
-            });
-        }
-    }
+        res.statusCode = 204;
+        res.end();
+    });
 };
 
+// Get a Story's Single Subtask by id
 const getSubtask = (req, res) => {
-    // Code to update a subtask's status
-    for (const storyId in stories) {
-        const story = stories[storyId];
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
+    const taskId = parseId(req.url, 4);
+    const task = story[taskId];
 
-        const tasksObj = story.tasks;
-
-        for (const taskId in tasksObj) {
-            const task = tasksObj[taskId];
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(task));
-        }
-    }
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(task));
 };
 
+// Delete Story's Task by Id
 const deleteSubtask = (req, res) => {
-    // Code to delete a subtask
-    for (const storyId in stories) {
-        const story = stories[storyId];
+    const storyId = parseId(req.url, 2);
+    const story = stories[storyId];
+    const taskId = parseId(req.url, 4);
+    const task = story[taskId];
 
-        const tasksObj = story.tasks;
-
-        for (const taskId in tasksObj) {
-            const task = tasksObj[taskId];
-            delete task;
-            res.statusCode = 200;
-            res.end();
-        }
-    }
+    delete task;
+    res.statusCode = 200;
+    res.end();
 };
 
 const server = http.createServer((req, res) => {
-    // Routing logic
     const isPathMatchStories = verifyPathMatch(req.url, 3);
     const isPathMatchTasks = verifyPathMatch2(req.url, 4);
 
