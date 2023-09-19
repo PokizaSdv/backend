@@ -1,0 +1,23 @@
+{
+  "name": "crm",
+  "version": "1.0.0",
+  "description": "Customer Relationship Management",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PokizaSdv/backend.git#assignment-5"
+  },
+  "author": "pokiza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PokizaSdv/backend/issues"
+  },
+  "homepage": "https://github.com/PokizaSdv/backend/tree/assignment-5#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
+  }
+}
