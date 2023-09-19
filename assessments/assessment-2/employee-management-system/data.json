@@ -1,0 +1,22 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Doe",
+            "department": "Engineering",
+            "role": "Software Engineer",
+            "yearlySalary": 80000,
+            "phoneNumber": "555-555-5555"
+        },
+        {
+            "id": 2,
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "department": "Marketing",
+            "role": "Marketing Specialist",
+            "yearlySalary": 70000,
+            "phoneNumber": "444-444-4444"
+        }
+    ]
+}
