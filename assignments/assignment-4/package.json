@@ -1,0 +1,15 @@
+{
+    "name": "assignment-4",
+    "version": "1.0.0",
+    "description": "Modify Server to express",
+    "main": "express.js",
+    "scripts": {
+        "start:dev": "nodemon express.js"
+    },
+    "author": "pokiza",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.2",
+        "uuid": "^9.0.1"
+    }
+}
