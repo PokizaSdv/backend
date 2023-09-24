@@ -1,0 +1,166 @@
+//  Organizing Our Code | Middleware and Services
+// Introduction: The Challenge of a Thick Controller
+// When we talk about the architecture of backend systems, one of the most pressing challenges for new developers is to structure code in a maintainable and scalable manner. Controllers, especially, can get cluttered with numerous responsibilities— from input validation to business logic and even direct data manipulation. This scenario is often referred to as having a "thick" controller, which can become an issue for long-term maintenance and readability of the code.
+
+// Initial Scenario: The Thick Controller Explained
+// In our initial example, the book controller, coded in JavaScript, is responsible for various tasks:
+
+// Input Validation: It checks whether the bookId provided in the request parameters is valid.
+// Data Manipulation: It directly accesses and manipulates the books object, which acts as our database.
+// HTTP Response: It also handles sending back the HTTP responses.
+// Here's a snippet to remind us of the initial state: Full version is here
+
+class BookController {
+    getBookById = (req, res) => {
+        const bookId = req.params.bookId;
+        if (!validate(bookId) || !books[bookId]) {
+            res.status(400).json({ message: "Not a valid book ID" });
+            return;
+        }
+        res.status(200).json({ data: books[bookId] });
+    };
+
+    deleteBook = (req, res) => {
+        const bookId = req.params.bookId;
+        if (!validate(bookId) || !books[bookId]) {
+            return res.status(400).json({ message: "Not a valid book ID" });
+        }
+        delete books[bookId];
+        res.status(204).send();
+    };
+}
+
+export const bookController = new BookController();
+// Why Is This Problematic?
+// Redundancy: The same type of validation is conducted in multiple functions.Coupling:
+// The controller is tightly coupled with data manipulation logic.
+// Maintainability and Scalability: Any change in data structure or validation logic will necessitate modifications in multiple places, making the code hard to maintain and scale.
+// Transition to Services: Dealing with Business Logic
+// When we talk about "business logic," we're referring to the set of rules, computations, and operations that our application performs on the data. For instance, in our getBookById method, the business logic involves fetching a book object by its ID.
+
+// The term "service" in a backend context usually refers to a set of functions that handle the core business logic of an application. By shifting the business logic to a service, we free the controller to focus solely on handling HTTP requests and delegating the core operations to the appropriate services.
+
+// BookService.js: Business Logic Segregated
+// In this refactored version, the BookService class is responsible for all operations related to books.
+
+// services/book.service.js
+class BookService {
+    getBookById(bookId) {
+        return books[bookId];
+    }
+
+    deleteBook(bookId) {
+        if (books[bookId]) {
+            delete books[bookId];
+        }
+        return "Error";
+    }
+}
+
+export const bookService = new BookService();
+// Each function in BookService corresponds to a specific business operation. Now, our controller can invoke these functions, thereby becoming thinner and more focused on handling HTTP requests and responses.
+
+// Introduction to Middleware: The Validation Layer
+// Middleware in the Express framework is a powerful tool that sits between the client request and server response. Middleware functions can perform a variety of tasks like logging, user authentication, and importantly, validation.
+
+// What Does Middleware Do?
+// Middleware functions have access to the request object (req), the response object (res), and a next function. This next function, when called, passes control to the next middleware in the sequence, or if none exists, to the route handler (controller).
+
+// The Significance of 'next'
+// The next function is crucial because it signals that the current middleware has completed its operations and that the request/response cycle should proceed to the next middleware or route handler. If next is not called, the application will hang, leaving the client waiting indefinitely for a response.
+
+// Extracting Validation Logic
+// Now, let's look at how we can create middleware to validate IDs in our application.
+
+// middlewares/book.middleware.js
+class ValidationMiddleware {
+    validateIds = (req, res, next) => {
+        const { params } = req;
+        for (const id in params) {
+            if (id.toLowerCase().endsWith("id")) {
+                if (!validate(params[id])) {
+                    res.status(400).json({ message: `Not a valid ${id}` });
+                    return;
+                }
+            }
+        }
+        next();
+    };
+}
+// This ValidationMiddleware class has a method validateIds that performs precisely the same validation we initially had in our controller. It iterates over all parameters in the request to validate those that end with "id." If one of the ids is not valid, they we will send 400 response. If all ids are valid, then we call next() which means, you are good to go and Controller after me will handle you!
+
+// Final Architecture: Putting It All Together
+// Finally, let's look at how our routes file changes to incorporate the middleware.
+
+// routes/book.routes.js
+bookRouter.get(
+    "/:bookId",
+    validationMiddleware.validateIds,
+    bookController.getBookById
+);
+bookRouter.delete(
+    "/:bookId",
+    validationMiddleware.validateIds,
+    bookController.updateBook
+);
+// The validateIds middleware is called before our controller methods. If the validation fails, the middleware will send a 400 status code, and the controller methods will never be invoked.
+
+// The Benefits of Refactoring
+// By meticulously separating business logic into a service layer and extracting common validation into middleware, we have vastly improved our application's architecture. Our controller is now much thinner and limited to its true responsibilities. Middleware manages common validation, and the service layer encapsulates the business logic.
+
+// By doing so, we not only make our application easier to maintain and scale but also adhere to software engineering principles that enable better collaboration, easier testing, and more agile development.
+
+// The Problem: Collecting Garbage in the Database
+// Imagine your application's backend directly takes whatever data is sent through the request and stores it in the database. While this might seem straightforward, it can lead to several issues:
+
+// Data Integrity: Allowing all incoming fields means that we might save fields that are irrelevant or even harmful to our application.
+// Database Bloat: Over time, the database could become cluttered with useless or redundant information. This could slow down queries, making your application less efficient.
+// Security Risks: If the application indiscriminately accepts all data, it could potentially become a target for malicious activities such as SQL injection, among others.
+// Maintenance Issues: Future developers would find it difficult to understand which fields are necessary and why certain data is stored, making it challenging to maintain or upgrade the system.
+// The Solution: Field Restrictions and Data Sanitization
+// To prevent these problems, a robust backend should be designed to filter and sanitize the data before it interacts with the business logic or gets stored in the database. This is where our allowedFields constant array and sanitizeObj utility function come into play.
+
+// Allowed Fields: Central Repository of Truth
+// We define arrays BOOK_FIELDS and REVIEW_FIELDS in a file called const/allowedFields.js:
+
+// Inside const/allowedFields.js
+export const BOOK_FIELDS = ["author", "genre", "name"];
+export const REVIEW_FIELDS = ["reviewer", "text", "rating"];
+// These arrays serve as the single source of truth for what fields are allowed in book and review objects. By doing this, you prevent arbitrary fields from being added to the database.
+
+// Data Sanitization with sanitizeObj
+// Next, we utilize the sanitizeObj function within the controllers to sanitize the incoming data. This function takes the allowed fields array and the incoming object and returns a new object containing only the fields found in the allowed fields array.
+
+// Inside utils/sanitizeObj.js
+export const sanitizeObj = (allowedFields, obj) => {
+    const sanitizedData = {};
+    for (const field in obj) {
+        if (allowedFields.includes(field)) {
+            sanitizedData[field] = obj[field];
+        }
+    }
+    return sanitizedData;
+};
+// Bringing It All Together
+// Finally, within our controller, before passing any data to the business logic or saving it to the database, we sanitize it:
+
+// Inside controllers/bookController.js
+import { BOOK_FIELDS } from "../const/allowedFields";
+import { sanitizeObj } from "../utils/sanitizeObj.js";
+import { bookService } from "../services/book.service.js";
+
+const createBook = (req, res) => {
+    const sanitizedData = sanitizeObj(BOOK_FIELDS, req.body);
+    const newBook = bookService.createBook(sanitizedData);
+    res.status(201).json({ data: newBook });
+};
+// By doing this, you ensure that only the relevant, allowed fields are passed on to the service layer and eventually stored in the database.
+
+// Field Sanitizing Benefits
+// Adopting field restrictions and data sanitization techniques in this manner accomplishes several goals:
+
+// Enhanced Data Integrity: Only verified fields make it into the database.
+// Optimized Database Performance: By avoiding unnecessary data, you optimize storage and query performance.
+// Security: This method acts as a first line of defense against potential malicious attacks that exploit poor data validation.
+// Maintainability: A single, easily accessible list of allowed fields makes the system easier to understand, modify, and debug.
+// In essence, these practices contribute to making your backend architecture not only robust but also maintainable and secure. It helps new backend developers understand the importance of data validation and why such seemingly small details can have a significant impact on the quality and security of the application.
