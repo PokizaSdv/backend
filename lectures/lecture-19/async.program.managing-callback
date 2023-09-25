@@ -1,0 +1,141 @@
+Asynchronous Programming in JavaScript
+JavaScript's Single Thread
+JavaScript operates on a single thread, which means one operation is executed at a time in a linear sequence, ideal for writing straightforward, predictable code.
+
+The Asynchronous Challenge
+Tasks like reading a file or fetching data from a server can be time-consuming. A single-threaded environment like JavaScript faces the challenge of executing these tasks without stalling the entire application.
+
+The Event Loop: JavaScript's Asynchronous Solution
+JavaScript employs an Event Loop to manage asynchronous tasks. Think of it as a smart manager who organizes tasks in a way that the single thread is kept as busy as possible, but never stuck on a single task for too long.
+
+Role of libuv: Written in C
+Node.js uses a library called libuv to handle these asynchronous tasks. Written in C, libuv is an abstraction layer over the non-blocking I/O provided by most operating systems. It's like a backstage crew that works diligently to ensure that the show (your program) goes on smoothly.
+
+Is libuv Blocking or Non-blocking?
+Although written in C, which supports multi-threading, libuv itself aims to provide non-blocking I/O operations to Node.js. It uses a variety of methods, including event polling and a thread pool, to ensure that JavaScript's single thread is not blocked. However, the internal threads managed by libuv do handle tasks in a blocking manner within their own isolated contexts, which is abstracted away from the JavaScript runtime.
+
+Task Completion and Event Loop
+Once libuv completes a task, it informs the Event Loop, which then queues up the corresponding callback function for execution on JavaScript's single thread.
+
+Example: Reading a File Asynchronously with Node.js
+const fs = require('fs');
+
+// Start reading the file asynchronously
+fs.readFile('example.txt', 'utf8', (err, data) => {
+    if (err) throw err;
+    console.log(`File contents: ${data}`);
+});
+
+// This will execute while the file is still being read
+console.log('Reading file...');
+Here, fs.readFile() is a non-blocking function. As soon as it's called, it's handed over to libuv, allowing the next line, console.log('Reading file...'), to execute immediately. When the file is finally read, libuv signals the Event Loop to execute the callback function.
+
+Summary
+To summarize:
+
+JavaScript operates in a single-threaded environment.
+Asynchronous tasks can be a challenge to manage efficiently.
+The Event Loop serves as a task manager for asynchronous operations.
+libuv, written in C, handles these tasks behind the scenes.
+Blocking operations hold up the line, while non-blocking ones let you do other things.
+libuv aims to provide non-blocking I/O to JavaScript while managing blocking tasks internally in separate threads.
+Completed tasks are routed back to the JavaScript thread via the Event Loop for final execution.
+By understanding these intricate details, we gain a robust comprehension of how Node.js ingeniously manages to maintain JavaScript's single-threaded simplicity while leveraging the power of asynchronous, non-blocking I/O.
+
+Managing Asynchronicity | Callbacks
+Introduction
+In your previous learning session, you were introduced to the concept of asynchronous programming. This is a programming model that allows multiple operations to execute without waiting for each other to complete. This is particularly useful in Node.js, where one operation might be time-consuming, such as file reading, web scraping, or API calling. Asynchronous programming ensures that while one operation is in progress, other operations aren't stalled or 'blocked,' making applications more efficient and responsive.
+
+Node.js offers several ways to handle asynchronous programming. One such way is by using callbacks. Today, we will delve deeper i﻿nto this topic, using a specific example that employs callbacks for managing "To-Do" items in a RESTful API.
+
+What Are Callbacks?
+In programming, a callback is essentially a function that is passed into another function as an argument. This function is then executed after the completion of that operation. So, the idea here is to provide a function that will be called once a specific task is done, rather than waiting for that task to complete.
+
+The Example: A Brief Overview
+import express from "express";
+import fs from "fs";
+import { v4 as uuid } from "uuid";
+
+const app = express();
+app.use(express.json());
+
+app.post("/todos", (req, res) => {
+    const { body } = req;
+    fs.readFile("data.json", "utf-8", (err, data) => {
+        if (err) {
+            res.status(500).json({
+                message: "Internal error",
+            });
+            return;
+        }
+        if (data) {
+            const todo = {
+                id: uuid(),
+                task: body.task,
+                status: "todo",
+            };
+            const parsedData = JSON.parse(data);
+            parsedData.push(todo);
+            fs.writeFile("data.json", JSON.stringify(parsedData), (err) => {
+                if (err) {
+                    res.status(500).json({
+                        message: "Internal error",
+                    });
+                    return;
+                }
+                res.status(201).json({
+                    message: "Success",
+                });
+            });
+        }
+    });
+});
+
+const PORT = 4000;
+
+app.listen(PORT, () => {
+    console.log("Process is running on ", PORT);
+});
+
+
+The example provided showcases a RESTful API built with Node.js and Express. This API uses asynchronous file operations to manage "To-Do" items. It will read from and write to a JSON file to persistently store these items.
+
+Required Modules and Libraries
+express: A web framework for Node.js.
+fs: File System module in Node.js.
+uuid: A library for generating unique identifiers.
+Initializing the Express Application
+The first step is to create an instance of the Express application.
+To parse incoming JSON requests, express.json() middleware is applied.
+Starting the HTTP Server
+The server is configured to listen on port 4000.
+Once initiated, a log message will appear in the console, confirming the server is running.
+Deep Dive: The /todos Endpoint
+Now, let's dissect how callbacks are used in the HTTP POST route for /todos.
+
+Receiving Data from the Client
+Upon receiving an HTTP POST request, the first action is to extract the request body, which presumably contains data about the new "To-Do" item.
+Asynchronously Reading from a File
+fs.readFile is invoked to read data from a file named data.json.
+It takes in three arguments:The file name.
+The encoding (here, "utf-8").
+A callback function, which will execute once the reading operation is completed.
+Handling Errors and File Data
+The callback function in fs.readFile has two parameters:
+An error object (err), which will be populated if an error occurs.
+The data (data) read from the file.
+If an error is detected, a response with HTTP status code 500 is sent back to indicate an internal server error.
+Manipulating and Storing Data
+If the file reading operation is successful, the data is parsed from a JSON-formatted string into a JavaScript object.
+A new "To-Do" item is created, complete with a unique identifier and the task information.
+The new item is then added to the existing list of items.
+Asynchronously Writing to a File
+fs.writeFile is then invoked to write the updated list back into the data.json file.
+Similar to fs.readFile, fs.writeFile also takes a callback function to execute post-write operations.
+Finalizing the Operation
+If the file write operation is successful, an HTTP 201 status code along with a success message is sent back.
+If an error occurs during the writing operation, a 500 internal server error is returned.
+In Summary
+This example effectively illustrates the use of callbacks in managing asynchronous file operations in a Node.js application. Callbacks serve as a robust way to handle asynchronicity, especially in relatively simple scenarios. However, be mindful that as the number of nested callbacks grows, the complexity of the code can also increase, leading to a phenomenon commonly known as "Callback Hell."
+
+By understanding and utilizing callbacks, you have another tool at your disposal to manage asynchronous operations in Node.js, thereby building more responsive and efficient applications.
