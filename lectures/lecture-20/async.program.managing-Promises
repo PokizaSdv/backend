@@ -1,0 +1,191 @@
+ Managing Asynchronicity | Promises | Part-1
+Intro
+Promises have become an indispensable part of JavaScript programming, offering a more modern and structured approach to managing asynchronous operations compared to traditional callbacks. One of the noteworthy features of promises is that they are immutable; their state is a one-time-only transition from pending to either fulfilled or rejected. Once a promise has been settled, it cannot be resettled, thus preventing some common errors you might encounter with callbacks.
+
+Historical Perspective
+Promises in JavaScript are not a recent phenomenon, despite their native inclusion in the ES2015 standard. Various libraries had already implemented their versions of Promises, sometimes referred to as "deferreds," particularly in jQuery. With the advent of ES2015, a native Promise API became standard, thereby offering a consistent way to handle asynchronous operations across different platforms and libraries.
+
+Promises as Guarantees of Future Value
+Promises can be understood as a "guarantee of a future value." Imagine visiting a café to buy a sandwich. Upon payment, you receive a ticket, symbolizing a promise that you will eventually get your sandwich. One of two scenarios will unfold:
+
+The ticket is called, you collect your sandwich, and the ticket is discarded. This signifies that the promise has been resolved, and it can no longer be reused.
+The ticket is called, but due to an error, you don't receive your sandwich, leading to the return of your ticket. This marks the promise as rejected.
+Understanding the Syntax
+In JavaScript, you can create a Promise using the Promise constructor. This constructor accepts a single function, which in turn takes two parameters: resolve and reject functions. This might seem a bit convoluted at first; however, with a little practice, it becomes quite intuitive.
+
+Here's an example code snippet to elaborate:
+
+function firstPromise() {
+  return new Promise(function(resolve, reject) {
+    var x = Math.random();
+    if (x > 0.5) {
+      resolve(`Hooray! Your promise was resolved with value ${x}.`);
+    } else {
+      reject(`Oh no, your promise was rejected with value ${x}`);
+    }
+  });
+}
+Consuming Promises with .then and .catch
+The firstPromise function returns a Promise, so it's crucial to specify what should happen when this Promise is settled. You can utilize the .then() method to register callbacks for successful resolution and the .catch() method to handle rejections.
+
+Here's how to consume the promise:
+
+firstPromise()
+  .then(function(data) {
+    return data;
+  })
+  .catch(function(error) {
+    return error;
+  });
+Run this code multiple times, and you'll notice that the appropriate callback is invoked based on whether the Promise is resolved or rejected. This is because promises are guaranteed to settle, ensuring that either your .then or .catch callback will be called.
+
+Noteworthy Characteristics
+Immutable State: Once a promise is either resolved or rejected, its state is immutable, eliminating the risk of accidental state changes. *Sounds abstract? We will discuss it later!
+Readability: The use of .then() and .catch() methods makes promise-based code easier to read and manage compared to nested callbacks.
+Error Handling: With the .catch() method, promises provide a robust way to handle errors at any point in the chain of asynchronous operations.
+Conclusion
+Promises offer a structured and dependable approach to dealing with asynchronous code in JavaScript. Their immutability, readability, and efficient error-handling mechanisms have made them a staple in modern JavaScript programming. The native Promise API has also streamlined the way asynchronous code is written, making it easier to maintain and debug. Understanding the intricacies of promises is vital for anyone aiming to write reliable and effective JavaScript code.
+
+Managing Asynchronicity | Promises | Part-2
+When working with asynchronous operations in JavaScript, it's important to understand that while the ability to create promises is valuable, the frequency with which you'll consume them tends to be much higher. Many libraries, frameworks, and even native Node.js or browser APIs return promises. This is why understanding how to effectively consume promises is critical in day-to-day programming tasks.
+
+The Paradigm of Consumption Over Creation
+In many scenarios, especially when working with third-party libraries or APIs, promises are already created for you. For example, fetching data from an API, reading files in Node.js, or querying a database often returns a promise. Therefore, a significant portion of your interaction with promises will likely involve consuming them rather than creating them from scratch. Let's look at a practical example using Node.js's file system module to read data from a file and perform an operation with the result.
+
+Reading Data from a File Using Promises
+Node.js's file system (fs) module has promise-based functions that allow you to read from and write to files asynchronously. Here, we'll focus on reading a file using fs.promises.readFile.
+
+First, you need to import the file system module:
+
+import { promises as fs } from 'fs'; 
+Now, you can read a file and consume the returned promise as follows:
+
+fs.readFile('example.txt', 'utf-8')
+  .then(data => {
+    console.log(`File contents: ${data}`);
+  })
+  .catch(error => {
+    console.error(`An error occurred: ${error.message}`);
+  });
+In this example, fs.readFile() returns a promise that will be resolved with the file's content if the operation is successful, or rejected with an error otherwise. The .then() method allows you to specify what should happen when the promise is successfully resolved—in this case, logging the file contents to the console. Conversely, the .catch() method allows you to handle errors, which, in this example, involves logging an error message to the console.
+
+Understanding the Chain of Operations
+When consuming promises, you'll often want to perform a series of actions that depend on the successful completion of previous tasks. This is where the real power of promises comes into play—you can chain them using multiple .then() methods.
+
+fs.readFile('example.txt', 'utf-8')
+  .then(data => {
+    console.log(`File contents: ${data}`);
+    return 'some other data';
+  })
+  .then(newData => {
+    console.log(`New data: ${newData}`);
+  })
+  .catch(error => {
+    console.error(`An error occurred: ${error.message}`);
+  });
+Here, the second .then() method receives the value returned by the first .then() method ('some other data'), demonstrating how promises can be chained to create a sequence of asynchronous operations.
+
+When a .then() method returns a value, it implicitly wraps that value in a Promise. In essence, the return value from one .then() becomes the input for the next .then() in the chain. This chaining mechanism is possible precisely because .then() returns a new Promise object that resolves to the value you return from within its callback function.
+Why Consumption Is Pivotal
+Given that many asynchronous operations are encapsulated by pre-existing promises, being proficient at consuming them is a fundamental skill. From handling HTTP requests in a web application to reading and writing data in server-side JavaScript, the ability to consume promises effectively is integral to building resilient and efficient systems.
+
+Conclusion
+Consuming promises is an essential aspect of modern JavaScript development. While the ability to create promises remains important, most of your interactions with asynchronous code will involve consuming pre-existing promises. Mastering this aspect of promises—be it chaining them, handling their resolution, or dealing with errors—allows you to write code that is not only more readable and maintainable but also more robust and efficient.
+
+Managing Asynchronicity | Promises | Part-3
+Here is the code snippet illustrating the use of Promises in a Node.js application that utilizes the Express.js framework for handling HTTP POST requests:
+
+import fs from "fs";
+import { v4 as uuid } from "uuid";
+
+const app = express();
+app.use(express.json());
+
+app.post("/todos", (req, res) => {
+    const { body } = req;
+
+    fs.promises
+        .readFile("data.jso", "utf-8")
+        .then((data) => {
+            const todo = {
+                id: uuid(),
+                task: body.task,
+                status: body.status,
+            };
+            const parsedData = JSON.parse(data);
+            parsedData.push(todo);
+            return parsedData;
+        })
+        .then((parsedData) => {
+            return fs.promises.writeFile(
+                "data.json",
+                JSON.stringify(parsedData)
+            );
+        })
+        .then((_) => {
+            res.status(200).send();
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: err,
+            });
+        });
+});
+
+const PORT = 4000;
+
+app.listen(PORT, () => {
+    console.log("Process is running on ", PORT);
+});
+In-Depth Explanation of Promises in the Code Snippet
+Step 1: Reading File Contents
+In the first part of the Promise chain, we read the contents of a file using fs.promises.readFile(). This function is inherently asynchronous and returns a Promise.
+
+fs.promises
+    .readFile("data.jso", "utf-8")
+Upon successful file read, the Promise will resolve, and its data will be passed to the .then() method that immediately follows. If an error occurs, it will be caught later in the .catch() method, effectively halting the Promise chain.
+
+Step 2: Processing File Data
+Here, the .then() method receives the data read from the file. Inside this block, we parse the JSON data and perform some operations to add a new todo task.
+
+.then((data) => {
+    const todo = {
+        id: uuid(),
+        task: body.task,
+        status: body.status,
+    };
+    const parsedData = JSON.parse(data);
+    parsedData.push(todo);
+    return parsedData;
+})
+Notice the return parsedData; statement at the end of this block. This returned data will be passed on to the next .then() method in the Promise chain. Thus, we see how Promises can pass data between different steps in a chain.
+
+Step 3: Writing Data Back to the File
+We then write the modified data back to the file.
+
+.then((parsedData) => {
+    return fs.promises.writeFile(
+        "data.json",
+        JSON.stringify(parsedData)
+    );
+})
+Again, fs.promises.writeFile() is asynchronous and returns a Promise. The Promise is implicitly returned, so if this Promise resolves, it will trigger the next .then() in the chain. If it rejects, the .catch() method will handle it.
+
+Step 4: Sending a Success Response
+Once the write operation is completed successfully, the next .then() method is executed to send a 200 OK HTTP response to the client.
+
+.then((_) => {
+    res.status(200).send();
+})
+When a .then() method returns a value, it implicitly wraps that value in a Promise. In essence, the return value from one .then() becomes the input for the next .then() in the chain. This chaining mechanism is possible precisely because .then() returns a new Promise object that resolves to the value you return from within its callback function.
+
+Step 5: Error Handling
+The .catch() method at the end of the chain captures any errors that may have occurred during the process. It is a single point for error handling, making the code cleaner and more maintainable.
+
+.catch((err) => {
+    res.status(500).json({
+        message: err,
+    });
+})
+Summary
+The Promise chain you see in this example allows for clean, maintainable, and readable asynchronous code. The promises returned from fs.promises.readFile() and fs.promises.writeFile() are consumed and processed in a sequence of .then() methods. Each .then() method returns data or another Promise, allowing us to effectively pass control from one asynchronous operation to the next. Finally, we have a single .catch() method to handle any errors that may arise in any part of the chain, showcasing the robustness and resilience that Promises bring to asynchronous programming.
