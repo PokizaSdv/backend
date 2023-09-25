@@ -1,0 +1,25 @@
+{
+    "name": "assignment-7",
+    "version": "1.0.0",
+    "description": "practice using Promises",
+    "main": "server.js",
+    "scripts": {
+        "start:dev": "nodemon server.js",
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/PokizaSdv/backend.git#assignment-7"
+    },
+    "author": "pokiza",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/PokizaSdv/backend/issues"
+    },
+    "homepage": "https://github.com/PokizaSdv/backend/tree/assignment-7#readme",
+    "dependencies": {
+        "express": "^4.18.2",
+        "uuid": "^9.0.1"
+    },
+    "type": "module"
+}
