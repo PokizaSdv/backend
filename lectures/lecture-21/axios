@@ -1,0 +1,170 @@
+// Making API calls using Axios
+// Welcome to this comprehensive lecture on utilizing Axios for network I/O operations within a Node.js environment. Today, we will delve into the intricacies of CRUD (Create, Read, Update, Delete) operations for managing posts and comments via HTTP requests. Network I/O is a fundamental part of modern web development, allowing us to interact with external APIs, databases, or other services. We'll focus on how to perform these operations using Axios, a highly popular JavaScript library designed for making HTTP requests.
+
+// Why Axios?
+// Axios is incredibly versatile, offering both simple and configuration-based syntaxes for handling a wide array of HTTP requests. It operates based on the concept of Promises, which are a modern way to handle asynchronous operations in JavaScript. A Promise is essentially a placeholder for the result of an operation that will be completed in the future. This means when we make an HTTP request with Axios, it returns a Promise that we need to consume.
+
+// The Promise Lifecycle: Then, Catch, and Finally
+// When a Promise is returned, there are essentially three things that you might do to interact with it:
+
+// then(): This method is invoked when a Promise is successfully resolved. In the context of Axios, it means that the HTTP request was successful, and the server has returned a response. The data you're interested in will usually be in a property called response.data.
+// catch(): This method is called when a Promise is rejected. In Axios, this happens if there's an error with the HTTP request, such as network issues, or the server returns an error status. Here, you can capture the error and decide what to do with it.
+// Simple Syntax vs Config Syntax
+// Simple Syntax: This form uses specific methods for different HTTP operations (e.g., axios.get(), axios.post()). It's straightforward and concise.
+// Config Syntax: This form allows you to pass an entire configuration object to a general request method axios(). It is highly customizable and beneficial for complex requests.
+// CRUD Operations for Posts
+// Create a New Post
+// Simple Syntax
+
+// axios.post('https://jsonplaceholder.typicode.com/posts', {
+//   title: 'New Post',
+//   body: 'Content of the new post.',
+//   userId: 1
+// })
+// .then(response => {
+//   console.log('New Post Created:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// Config Syntax
+
+// axios({
+//   method: 'post',
+//   url: 'https://jsonplaceholder.typicode.com/posts',
+//   data: {
+//     title: 'New Post',
+//     body: 'Content of the new post.',
+//     userId: 1
+//   }
+// })
+// .then(response => {
+//   console.log('New Post Created:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// In both methods, we're hitting the /posts endpoint with a POST request. We send the post details (title, body, userId) as part of the request body. Both return a promise that resolves with the newly created post data.
+
+// Retrieve an Existing Post
+// Simple Syntax
+
+// axios.get('https://jsonplaceholder.typicode.com/posts/1')
+// .then(response => {
+//   console.log('Post Retrieved:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// Config Syntax
+
+// axios({
+//   method: 'get',
+//   url: 'https://jsonplaceholder.typicode.com/posts/1'
+// })
+// .then(response => {
+//   console.log('Post Retrieved:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// In both methods, we use a GET request to fetch data for the post with ID 1. The GET request doesn't require any additional data, so the object only specifies the method and URL.
+
+// Update an Existing Post
+// Simple Syntax with PUT
+
+// axios.put('https://jsonplaceholder.typicode.com/posts/1', {
+//   id: 1,
+//   title: 'Updated Title',
+//   body: 'Updated Content',
+//   userId: 1
+// })
+// .then(response => {
+//   console.log('Post Updated:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// Config Syntax with PUT
+
+// axios({
+//   method: 'put',
+//   url: 'https://jsonplaceholder.typicode.com/posts/1',
+//   data: {
+//     id: 1,
+//     title: 'Updated Title',
+//     body: 'Updated Content',
+//     userId: 1
+//   }
+// })
+// .then(response => {
+//   console.log('Post Updated:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// For updating an existing post, you can use the PUT method. Here, we replace the current resource with a new one. Both syntaxes are similar but the data property in the Config Syntax allows for more customization.
+
+// Delete an Existing Post
+// Simple Syntax
+
+// axios.delete('https://jsonplaceholder.typicode.com/posts/1')
+// .then(response => {
+//   console.log('Post Deleted:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// Config Syntax
+
+// axios({
+//   method: 'delete',
+//   url: 'https://jsonplaceholder.typicode.com/posts/1'
+// })
+// .then(response => {
+//   console.log('Post Deleted:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// In both the simple and config syntax, the DELETE request is straightforward since it does not require any additional data other than the resource ID in the URL.
+
+// Filtering Posts by User ID
+// The objective is to get all posts that belong to the user with ID 1. We can specify this filter by appending ?userId=1 to the URL.
+
+// Simple Syntax
+
+// axios.get('https://jsonplaceholder.typicode.com/posts?userId=1')
+//   .then(response => {
+//     console.log('Filtered Posts:', response.data);
+//   })
+//   .catch(error => {
+//     console.log('Error:', error);
+//   });
+// Config Syntax
+
+// axios({
+//   method: 'get',
+//   url: 'https://jsonplaceholder.typicode.com/posts',
+//   params: {
+//     userId: 1
+//   }
+// })
+// .then(response => {
+//   console.log('Filtered Posts:', response.data);
+// })
+// .catch(error => {
+//   console.log('Error:', error);
+// });
+// In-Depth Explanation
+// Simple Syntax: Here, we directly append the query parameters to the URL. The axios.get() function sends a GET request to the modified URL, fetching posts that belong to the user with ID 1.
+// Config Syntax: In this approach, Axios provides a dedicated params object where we can specify all the query parameters we want to append to the URL. It has the advantage of making the URL construction more transparent and easier to manipulate programmatically.
+// CRUD Operations for Comments
+// The operations for comments are structurally similar to those for posts but would target a different endpoint (/comments instead of /posts). Therefore, one can follow the above code examples but replace /posts with /comments and the appropriate data fields as per the comments schema.
+
+// In-Depth Explanation
+// then(): This function receives the response object once the Axios promise resolves. The response.data contains the actual data sent back by the server.
+// catch(): This function captures any errors in case the Axios promise is rejected.
+// method: The type of HTTP request being made (GET, POST, PUT, DELETE).
+// url: The API endpoint the request is being sent to.
+// data: Contains the payload being sent to the server in POST, PUT, and PATCH requests.
