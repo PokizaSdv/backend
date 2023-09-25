@@ -1,0 +1,94 @@
+Program, Process, and Thread
+What's a Program?
+Think of a program as a recipe. It's a set of instructions that tells a computer what to do, but by itself, it's inert. It's not doing anything; it's just a text file sitting on your hard drive. You can read it, you can edit it, but until you give it to someone—or in this case, some "thing"—to execute, it's dormant. A program comes alive when it's turned into a process.
+
+// A simple JavaScript "recipe" to sum integers from 1 to 10
+let sum = 0;
+for(let i = 1; i <= 10; i++) {
+    sum += i;
+}
+console.log(`The sum is ${sum}`);
+What's a Process?
+When you take that recipe (program) and actually start cooking (execution), it becomes a process. A process is an instance of a computer program that is being executed. It has its own memory space, and it may involve multiple threads of execution. Imagine if your recipe suddenly sprouted hands and started cooking itself—that's akin to a process.
+
+In the realm of JavaScript running on Node.js, when you execute your script using the node command, you're creating a process. The entire Node.js runtime, along with your script and all its dependencies, becomes part of this process.
+
+node myProgram.js
+What's a Thread?
+A thread is like a chef's hand. Just as a chef uses both hands to chop, stir, and season simultaneously, a program can use multiple threads to perform multiple tasks at once. However, in JavaScript, it's like the chef decides to use only one hand to ensure he doesn't accidentally cut the other hand (avoid issues like race conditions). JavaScript is single-threaded, meaning it uses only one sequence of operations to execute your code.
+
+JavaScript's unique challenge is to make asynchronous tasks like API calls, file reads, and timers efficient while still using only one thread. It's like a chef who can still cook multiple dishes for a big dinner party but opts to use just one hand. The trick is in how he organizes his tasks (Event Loop) and uses his assistants (Web APIs in browsers or libuv in Node.js).
+
+// JavaScript handling asynchronous tasks one at a time in a single thread
+console.log("Chopping onions");  // Task 1
+
+
+fs.readFile('data.txt', 'utf-8', (err, data) => {
+    console.log("Onions are ready!");  // Task 2  
+})
+
+console.log("Preparing tomatoes");  // Task 3
+When you run this code, you'll notice that it doesn't wait for the onions ("Task 2") to be ready before moving on to the tomatoes ("Task 3"). This single-threaded chef is multitasking efficiently!
+
+JavaScript's Single Thread in a Multi-threaded Environment
+Even though a process can have multiple threads, JavaScript chooses to use just one. This isn't because JavaScript can't handle more (Node.js and browsers do use multiple threads behind the scenes), but rather it's a design choice to make it easier to write predictable, linear code without the challenges of multi-threading like deadlocks, race conditions, and the complexity of thread management.
+
+
+I/O, Blocking and Non-blocking
+I/O
+The term I/O is a fundamental concept in computer science that refers to the communication between an information processing system (such as a computer) and the external world, possibly a human, or another information processing system. Inputs are the signals or data sent to the system, and outputs are the signals or data sent by the system to the external world.
+
+Types of I/O Operations
+File I/O: One of the most common types of I/O, file I/O involves reading from or writing to a file stored on a storage medium like an SSD or hard disk. For example, when you open a document, the computer reads the file. When you save it, the computer writes to the file.
+Network I/O: This type of I/O concerns the sending and receiving of data across a network, such as downloading a web page from the internet or sending an email. Network I/O can happen over various protocols like HTTP, FTP, or TCP/IP.
+User I/O: This I/O type deals with interaction between the user and the computer. Inputs can be as simple as keypresses or mouse clicks, and outputs could be rendering graphics on the screen or playing sounds.
+Database I/O: This involves the reading and writing operations to a database. Querying a database to retrieve some data or updating a database both involve database I/O operations.
+Inter-process I/O: This type occurs between different processes running on the same machine. For example, piping the output of one command into another on a UNIX-like command line involves inter-process I/O.
+Device I/O: This pertains to the communication between the CPU and external devices like printers, audio systems, or graphic cards. For example, sending a document to a printer involves device I/O.
+Blocking Operations
+When we say an operation is 'blocking,' we mean that the execution of the program halts until that specific operation is completed. This is particularly true when a program interacts with external systems or resources, such as reading from a hard drive or waiting for user input. In a blocking model, JavaScript would pause its execution and wait for the file to be completely read or written, or for the data to be fetched from a network, before moving on to the next operation.
+
+Imagine JavaScript as a student who reads a book and stops to look up every unfamiliar word in a dictionary. Until he finds the meaning of the word, he won't move on to the next sentence. He is completely 'blocked' by the look-up operation.
+
+Non-blocking Operations
+On the other hand, 'non-blocking' means that the program can continue to perform other tasks while waiting for another operation to complete. In a non-blocking paradigm, JavaScript would initiate the operation (e.g., file reading) and then move on to other tasks. When the operation is completed, JavaScript is notified and can then proceed to use the result.
+
+Using the previous analogy, imagine the student starts to read the book and encounters an unfamiliar word. Instead of stopping to look it up, he marks it and continues reading the rest of the paragraph. Once he finishes the paragraph, he goes back to look up any unfamiliar words he marked. This way, he is not 'blocked' by the look-up operation; he multitasks.
+
+I/O Steps
+Step 1: Understanding the Context of I/O
+Input/Output (I/O) operations involve any form of data transfer between a system's internal processes and external entities such as files, networks, or devices. For instance, reading from a disk, writing to a file, or making a network request are examples of I/O operations.
+
+Step 2: Initiating an I/O Operation
+Regardless of whether an operation is blocking or non-blocking, the initial step is the same: you initiate the I/O operation. This could involve issuing a command to read a file, requesting data from a database, or sending a request to a web server.
+
+Step 3: The Waiting Period
+After the I/O operation has been initiated, there is often a waiting period before the operation can complete. This is the time taken for data to be read from a disk, received over a network, etc. It's how this waiting period is managed that defines whether the operation is blocking or non-blocking.
+
+Blocking I/O: The System Waits
+In a blocking I/O operation, the system enters a waiting state and does not execute any other tasks until the I/O operation is complete. Essentially, the system is "blocked" from doing anything else.
+
+const fs = require('fs');
+const data = fs.readFileSync('file.txt', 'utf8');
+console.log("File data:", data);
+console.log("This message will appear after the file has been read.");
+
+Non-blocking I/O: The System Continues
+In a non-blocking I/O operation, the system initiates the I/O task but does not wait for it to complete. It moves on to execute other tasks and comes back to the I/O task when it is done.
+
+const fs = require('fs');
+fs.readFile('file.txt', 'utf8', (err, data) => {
+  if (err) throw err;
+  console.log("File data:", data);
+});
+console.log("This message may appear before the file has been read.");
+
+Step 4: Completion and Further Actions
+Both blocking and non-blocking I/O operations reach a point of completion, after which further actions can be taken.
+
+Blocking I/O: The next line of code is executed only after the I/O operation is complete.
+Non-blocking I/O: A callback function is often used to handle the result when the I/O operation is complete. The system can execute this callback while also managing other tasks.
+Summary
+Blocking I/O: The system waits for the I/O operation to complete, becoming temporarily unresponsive to other tasks.
+Non-blocking I/O: The system initiates the I/O operation and moves on to other tasks, remaining responsive.
+The underlying I/O operation is the same in both cases; what varies is how the system handles the waiting period associated with the operation. This choice depends on the specific requirements of the application or system you are working on.
