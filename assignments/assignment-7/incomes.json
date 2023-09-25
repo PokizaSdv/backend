@@ -1,0 +1,28 @@
+{
+    "incomes": {
+        "a1b2c3d4-e5f6-7a8b-9c1d-2e3f4a5b6c7d": {
+            "id": "a1b2c3d4-e5f6-7a8b-9c1d-2e3f4a5b6c7d",
+            "source": "Salary",
+            "amount": 5000,
+            "date": "09/22/2023"
+        },
+        "b1b2c3d4-e8f6-7a8b-9c1d-2e3f4a5b6c7c": {
+            "id": "a1b2c3d4-e5f6-7a8b-9c1d-2e3f4a5b6c7d",
+            "source": "Investment",
+            "amount": 12000,
+            "date": "05/12/2020"
+        },
+        "73733092-382b-4a46-a545-3533239641dd": {
+            "id": "73733092-382b-4a46-a545-3533239641dd",
+            "source": "Gambling",
+            "amount": 2000,
+            "date": "06/20/2020"
+        },
+        "e657b25c-04fe-4bfd-b3f7-a3e46f7790c6": {
+            "id": "e657b25c-04fe-4bfd-b3f7-a3e46f7790c6",
+            "source": "Lottery",
+            "amount": 7500,
+            "date": "03/26/2015"
+        }
+    }
+}
