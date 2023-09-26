@@ -1,0 +1,12 @@
+{
+    "posts": {
+        "uuid1": {
+            "id": "uuid1",
+            "title": "Understanding JavaScript",
+            "content": "JavaScript is a high-level, object-oriented programming language...",
+            "authorId": "authorUuid1",
+            "tagIds": ["tagUuid1", "tagUuid2"],
+            "createdDate": "09/22/2023"
+        }
+    }
+}
