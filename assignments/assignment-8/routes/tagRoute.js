@@ -1,12 +1,12 @@
-// import { Router } from "express";
-// import { tagController } from "../controllers/tagController.js";
+import { Router } from "express";
+import { tagController } from "../controllers/tag.controller.js";
 
-// const tagRouter = Router();
+const tagRouter = new Router();
 
-// tagRouter.get("/");
-// tagRouter.get("/:tagId");
-// tagRouter.post("/");
-// tagRouter.put("/");
-// tagRouter.delete("/:tagId");
+tagRouter.get("/", tagController.getAllTags);
+tagRouter.get("/:tagId", tagController.getTagById);
+tagRouter.post("/", tagController.createAnTag);
+tagRouter.put("/:tagId", tagController.updateAnTagById);
+tagRouter.delete("/:tagId", tagController.deleteAnTagById);
 
-// export { tagRouter };
+export { tagRouter };
