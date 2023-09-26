@@ -1,0 +1,144 @@
+Before the advent of databases
+Before the advent of modern database systems, organizations faced numerous challenges in managing, accessing, and storing their data. The implications of these challenges were profound and multifaceted, particularly as the volume of data began to increase with technological advancements and the expansion of businesses.
+
+Manual Record-Keeping and Filing Systems
+Initially, data was managed through manual record-keeping, often in the form of physical files and ledgers. Imagine a library, but instead of books, the shelves were filled with folders and documents. This manual system required significant manpower and time investment.
+
+Challenges:
+Limited Scalability: As organizations grew, so did their data, making manual systems inefficient and challenging to scale.
+Data Retrieval: Finding a specific piece of information from a large pile of files was not only time-consuming but also prone to errors.
+Duplication and Inconsistencies: Without a centralized system, the same data could be stored in multiple places, leading to inconsistencies and redundancy.
+Limited Accessibility: Data could only be accessed by physically locating and opening a file, limiting real-time and remote access to data.
+Vulnerability: Physical files were susceptible to damage from environmental factors like fire, water, and even wear and tear over time.
+Transition to Electronic Spreadsheets
+The transition from paper to electronic formats began with the advent of spreadsheets and basic data storage software. While spreadsheets represented a significant step forward, they too had limitations.
+
+Challenges:
+Data Integrity: Spreadsheets were prone to human error, as users could accidentally modify or delete data.
+Concurrent Access: Multiple users could not easily work on the same spreadsheet simultaneously.
+Data Complexity: As the need to store more complex and related data arose, spreadsheets became cumbersome and unwieldy.
+Necessity as the Mother of Invention
+The limitations of manual and early electronic systems led to the need for a more robust, efficient, and secure way to manage data. This need was particularly amplified with the advent of the digital age, where data wasn't just a byproduct of operations but a valuable asset that could provide strategic insights and competitive advantages.
+
+Database, Database Management Systems, Query Language
+What is a Database?
+A database is like a digital library or a virtual filing cabinet where you can store, organize, and manage information. Just like in a library where books are grouped by genre, author, or other criteria, a database also stores information in an organized way. This makes it easy to find, access, and manage the data when needed.
+
+Imagine you're running a small business. You'd need to keep track of various things like your products, your customers, and your sales. A database serves as the central location where all this information is kept. Instead of jotting down customer details on paper or maintaining Excel sheets that can become hard to manage, you store this data in a structured way in a database.
+
+What is a Database Management System (DBMS)?
+While the database is the digital 'filing cabinet' itself, a Database Management System (DBMS) is like the librarian that manages the filing cabinet. The DBMS is software that interacts with the user and the database to capture and analyze data. It provides you with the tools you need to perform various tasks like adding new information, updating existing information, or finding and viewing data in different ways.
+
+For instance, let's say you want to know which of your products are the most popular. The DBMS allows you to ask this question in a specific way (known as a query) and then quickly finds the answer for you by looking through your database.
+
+DBMS: MySQL, MongoDB, MariaDB, PostgreSQL and etc.
+
+What is a Query Language?
+A query language is the method you use to 'talk' to the DBMS so you can ask it questions or give it commands about the database. SQL (Structured Query Language) is the most commonly used query language for interacting with databases. This is like the specific set of rules or the 'language' that both you and the librarian (the DBMS) understand.
+
+If the DBMS is the librarian, think of the query language as the way you communicate with the librarian to get what you want. You might say, "Show me all the science fiction books published before 2000," and the librarian would understand your request and bring you the relevant books. In a similar way, you can ask a DBMS specific questions using a query language, like "Show me all the customers who have made a purchase in the last 30 days," and the DBMS would provide you with the data you're asking for.
+
+To sum it up:
+
+Database: The digital 'filing cabinet' where your information is stored.
+Database Management System (DBMS): The 'librarian' or the software that helps you manage the database.
+Query Language: The specific 'language' you use to talk to the DBMS to ask questions or give commands about the data in the database.
+I hope this explanation provides a clear understanding of what a database, a DBMS, and a query language are and how they relate to each other.
+
+After the advent of databases
+Efficiency: Quick Access to Information
+Before: Imagine you have a massive file cabinet, and you need to find a single piece of paper in it. You would have to open each drawer, look through folders, and then skim through pages to find what you need. This process could take hours or even days if the file cabinet is large enough.
+
+Now: With a database, it's like having a magical assistant who can instantly hand you the paper you need. You ask, and in a blink of an eye, the information is there. No more rummaging through drawers or flipping through pages. This speed is what we mean when we talk about the efficiency of databases.
+
+Scalability: Growing with Your Needs
+Before: If that file cabinet becomes too full, you'd need to buy another one, and another, taking up more space and making it even harder and more time-consuming to find what you need.
+
+Now: In contrast, a modern database is like a file cabinet that magically expands as you add more papers, yet it's just as easy to find what you need. It grows with you, so you don't have to worry about running out of space or things getting too complicated.
+
+Integrity and Security: Keeping Information Safe and Consistent
+Before: With physical files or simple electronic records, there's always the risk of papers getting lost, stolen, or damaged. Plus, two people might update two copies of the same file differently, causing confusion.
+
+Now: A database is like a super-secure vault that only allows authorized people to see or change the information. It also makes sure everyone is looking at the same, up-to-date information. It's a way to keep everything consistent and secure.
+
+Complex Queries: Answering Complicated Questions Easily
+Before: Finding out something complex, like how many customers bought both apples and oranges in the last month, would mean going through records one by one and then doing some mental gymnastics to get an answer.
+
+Now: With a database, it's like having a math genius as your assistant. You can ask complex questions, and the database will figure it out for you quickly and accurately.
+
+Concurrent Access: Teamwork Made Easy
+Before: If two people needed to update the same file, they'd have to take turns. One person would have to wait for the other to finish, making the process slow and cumbersome.
+
+Now: A database is like a collaborative online document where multiple people can make changes at the same time. Everyone can do their work without waiting for someone else to finish, making everything run more smoothly.
+
+In summary, the move from manual systems to modern databases is like going from riding a bicycle to flying in a jet plane. You can go faster, further, and more efficiently, all while carrying more cargo and ensuring a smoother, safer journey. The advantages in terms of efficiency, scalability, integrity and security, complex queries, and concurrent access fundamentally transform how organizations manage and use data.
+
+Database Types
+Intro
+Databases serve as the cornerstone of many software applications, providing a structured way to store, organize, and manage data. They have evolved over the years to handle different types of data models and to solve various problems. For this lecture, we will primarily focus on two broad categories of databases: SQL and NoSQL databases.
+
+SQL Databases
+SQL (Structured Query Language) databases are sometimes referred to as Relational Databases. They are based on the concept of a "relation," which you can think of as a table of data. SQL databases are designed to manage structured data, and they do this exceptionally well.
+
+Relational Databases: MySQL Example
+Let's consider MySQL, a popular SQL database, to understand the basic structure of SQL databases. Take this simple table called users:
+
+________________________________________________________________
+| id      | email         | firstName   | lastName   | city    |
+|_________|_______________|_____________|____________|_________|
+| 1       | first@ex.com  |  John       | Doe        | Lehi    |
+|_________|_______________|_____________|____________|_________|
+| 2       | second@ex.com | William     | Smith      | Chicago |
+|_________|_______________|_____________|____________|_________| 
+| 3       | third@ex.com  | Sarah       | Carters    | Brooklyn|
+|_________|_______________|_____________|____________|_________| 
+
+
+In this table:
+
+Rows: Each row represents a single user and all the information pertaining to that user.
+Columns: Each column holds a specific attribute about the user: id, email, firstName, lastName, and city.
+This table structure enables complex queries and transactions, making it ideal for many business applications.
+
+NoSQL Databases
+NoSQL databases are non-relational or distributed databases. They do not require a fixed schema, and the data can be inserted in the database without first defining its structure. They can handle large volumes of structured, semi-structured, or unstructured data, making them quite flexible.
+
+Document-Based Database: MongoDB
+MongoDB is an example of a NoSQL database that is document-based. In MongoDB, the equivalent of a "row" in SQL is a "document."
+
+BSON Format
+MongoDB stores data in a format called BSON, which is similar to JSON but more expressive, allowing the representation of data types not available in JSON.
+
+Converting the MySQL Table to MongoDB
+Here's how the users table would look like when converted to a MongoDB collection:
+
+[
+  {
+    "_id": ObjectId("5f50c31b3e9c9d3a840d6b83"),
+    "email": "ali@example.com",
+    "firstName": "Ali",
+    "lastName": "Ramazon",
+    "city": "Lehi"
+  },
+  {
+    "_id": ObjectId("5f50c31b3e9c9d3a840d6b84"),
+    "email": "john@example.com",
+    "firstName": "John",
+    "lastName": "Smith",
+    "city": "Brooklyn"
+  },
+  {
+    "_id": ObjectId("5f50c31b3e9c9d3a840d6b85"),
+    "email": "oksana@example.com",
+    "firstName": "Oksana",
+    "lastName": "Bazarova",
+    "city": "Tashkent"
+  }
+]
+In this example:
+
+Collections: The MongoDB equivalent of an SQL table is a collection. Here, we have a users collection.
+Documents: Each document in the collection represents a single user.
+Fields: The document contains fields that are the MongoDB equivalent of SQL columns.
+_id: Notice that the id field is replaced by _id and uses a special type called ObjectId. This is automatically generated by MongoDB and serves as a unique identifier for each document.
+In conclusion, SQL and NoSQL databases are designed to meet different needs and are optimized for different types of queries. SQL databases, like MySQL, are generally more structured and are better for complex query-intensive processes. NoSQL databases, like MongoDB, are more flexible and are designed for unstructured data like documents or JSON objects. Both have their pros and cons, and the selection between the two should be based on the specific needs of a project.

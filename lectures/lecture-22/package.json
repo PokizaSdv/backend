@@ -1,0 +1,24 @@
+{
+    "name": "lecture-22",
+    "version": "1.0.0",
+    "description": "To do app using express and vanilla mongodb",
+    "main": "index.js",
+    "scripts": {
+        "start:dev": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/PokizaSdv/backend.git#lecture-22"
+    },
+    "author": "pokiza",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/PokizaSdv/backend/issues"
+    },
+    "homepage": "https://github.com/PokizaSdv/backend/tree/lecture-22#readme",
+    "dependencies": {
+        "express": "^4.18.2",
+        "mongodb": "^6.1.0"
+    },
+    "type": "module"
+}
