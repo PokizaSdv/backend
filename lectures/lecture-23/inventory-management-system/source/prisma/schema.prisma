@@ -1,6 +1,6 @@
 datasource db {
     provider = "mongodb"
-    url = env("DB_URL")
+    url      = env("DB_URL")
 }
 
 generator client {
@@ -8,19 +8,18 @@ generator client {
 }
 
 enum Category {
-    BAKERY 
-    MEAT 
+    BAKERY
+    MEAT
     PRODUCE
     DAIRY
 }
 
 model Product {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
     name        String
     description String
     quantity    Int
     category    Category
     createdAt   DateTime @default(now())
     updatetAt   DateTime @updatedAt
-
 }

@@ -6,7 +6,7 @@
     "scripts": {
         "start:dev": "nodemon index.js",
         "prisma:g": "npx prisma generate --schema=./source/prisma/schema.prisma",
-        "db:g": "npx prisma db push --schema=./source/prisma/schema.prisma"
+        "db:p": "npx prisma db push --schema=./source/prisma/schema.prisma"
     },
     "repository": {
         "type": "git",
@@ -20,7 +20,9 @@
     "homepage": "https://github.com/PokizaSdv/backend/tree/lecture-23#readme",
     "dependencies": {
         "@prisma/client": "^5.3.1",
-        "express": "^4.18.2",
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
         "prisma": "^5.3.1"
     },
     "type": "module"
